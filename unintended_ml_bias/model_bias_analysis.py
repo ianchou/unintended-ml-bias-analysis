@@ -78,7 +78,7 @@ def add_subgroup_columns_from_text(df, text_column, subgroups):
     df[term] = df[text_column].apply(lambda x: bool(re.search(r'\b{}\b'.format(term), x, flags=re.IGNORECASE)))
 
 
-def balanced_subgroup_subset(df, subgroup):
+def balanced_subgroup_subset(df, subgroup, allow_subgroup_in_background=False):
   """Returns data subset containing subgroup balanced with sample of other data.
 
     We draw a random sample from the dataset of other examples because we don't
@@ -91,8 +91,9 @@ def balanced_subgroup_subset(df, subgroup):
     Note: Uses a fixed random seed for reproducability.
     """
   subgroup_df = df[df[subgroup]]
-  nonsubgroup_df = df[~df[subgroup]].sample(len(subgroup_df), random_state=25)
-  combined = pd.concat([subgroup_df, nonsubgroup_df])
+  sample_from = df if allow_subgroup_in_background else df[~df[subgroup]]
+  background_df = sample_from.sample(len(subgroup_df), random_state=25)
+  combined = pd.concat([subgroup_df, background_df])
   return combined
 
 
@@ -147,13 +148,15 @@ def compute_cross_subgroup_positive_mwu(df, subgroup, label, model_name):
                                        df[df[subgroup] & df[label]],
                                        model_name)
   return 1 - u_subgroup_positive
+
+def compute_normed_pinned_auc(df, subgroup, label, model_name):
     
-    
-def per_subgroup_aucs(dataset, subgroups, model_families, label_col):
+
+def per_subgroup_aucs(dataset, subgroups, model_families, label_col, allow_subgroup_in_background=False):
   """Computes per-subgroup 'pinned' AUC scores for each model family."""
   records = []
   for subgroup in subgroups:
-    subgroup_subset = balanced_subgroup_subset(dataset, subgroup)
+    subgroup_subset = balanced_subgroup_subset(dataset, subgroup, allow_subgroup_in_background)
     subgroup_record = {
         'subgroup': subgroup,
         'subset_size': len(subgroup_subset)
