@@ -69,14 +69,14 @@ class Madlibber(object):
         continue
 
       d_word_type = self.format_helper.deconstruct_word_type_hierarchy(word_type)
-      if not any(wt in self.__template_word_types for wt in self.__get_word_type_hierarchy(d_word_type)):
-        raise ValueError("'{}' is not a valid word type".format(word_type))
+      #if not any(wt in self.__template_word_types for wt in self.__get_word_type_hierarchy(d_word_type)):
+        #raise ValueError("'{}' is not a valid word type".format(word_type))
 
-      if word_conn not in self.__template_word_connotations:
-        raise ValueError("'{}' is not a valid word connotation".format(word_conn))
+      #if word_conn not in self.__template_word_connotations:
+        #raise ValueError("'{}' is not a valid word connotation".format(word_conn))
 
-      if word_gender not in self.__template_word_genders:
-        raise ValueError("'{}' is not a valid word gender".format(word_gender))
+      #if word_gender not in self.__template_word_genders:
+        #raise ValueError("'{}' is not a valid word gender".format(word_gender))
 
       corresponds_to_template_element = False
       for wt in self.__get_word_type_hierarchy(d_word_type):
@@ -86,7 +86,7 @@ class Madlibber(object):
           corresponds_to_template_element = True
       if not corresponds_to_template_element:
         template_element = self.format_helper.compose_template_element(word_type, word_conn, word_gender)
-        raise ValueError("'{}' is not a valid template element".format(template_element))
+        #raise ValueError("'{}' is not a valid template element".format(template_element))
 
       unicode_word = word.decode('utf-8')
       template_element = self.format_helper.compose_template_element(word_type, word_conn, word_gender)
