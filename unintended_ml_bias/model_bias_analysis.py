@@ -180,47 +180,47 @@ def per_subgroup_aucs(dataset, subgroups, model_families, label_col):
           compute_auc(subgroup_subset[label_col], subgroup_subset[model_name])
           for model_name in model_family
       ]
-      within_negative_label_mwus = [
-          compute_within_negative_label_mwu(dataset, subgroup, label_col, model_name)
-          for model_name in model_family
-      ]
-      within_positive_label_mwus = [
-          compute_within_positive_label_mwu(dataset, subgroup, label_col, model_name)
-          for model_name in model_family
-      ]
-      within_subgroup_mwus = [
-          compute_within_subgroup_mwu(dataset, subgroup, label_col, model_name)
-          for model_name in model_family
-      ]
-      cross_subgroup_negative_mwus = [
-          compute_cross_subgroup_negative_mwu(dataset, subgroup, label_col, model_name)
-          for model_name in model_family
-      ]
-      cross_subgroup_positive_mwus = [
-          compute_cross_subgroup_positive_mwu(dataset, subgroup, label_col, model_name)
-          for model_name in model_family
-      ]
-      normalized_pinned_aucs = [
-          compute_normalized_pinned_auc(dataset, subgroup, label_col, model_name)
-          for model_name in model_family
-      ]
-      positive_asegs, negative_asegs = zip(*[
-          average_squared_equality_gap(dataset, subgroup, label_col, model_name)
-          for model_name in model_family
-      ])
+      #within_negative_label_mwus = [
+      #    compute_within_negative_label_mwu(dataset, subgroup, label_col, model_name)
+      #    for model_name in model_family
+      #]
+      #within_positive_label_mwus = [
+      #    compute_within_positive_label_mwu(dataset, subgroup, label_col, model_name)
+      #    for model_name in model_family
+      #]
+      #within_subgroup_mwus = [
+      #    compute_within_subgroup_mwu(dataset, subgroup, label_col, model_name)
+      #    for model_name in model_family
+      #]
+      #cross_subgroup_negative_mwus = [
+      #    compute_cross_subgroup_negative_mwu(dataset, subgroup, label_col, model_name)
+      #    for model_name in model_family
+      #]
+      #cross_subgroup_positive_mwus = [
+      #    compute_cross_subgroup_positive_mwu(dataset, subgroup, label_col, model_name)
+      #    for model_name in model_family
+      #]
+      #normalized_pinned_aucs = [
+      #    compute_normalized_pinned_auc(dataset, subgroup, label_col, model_name)
+      #    for model_name in model_family
+      #]
+      #positive_asegs, negative_asegs = zip(*[
+      #    average_squared_equality_gap(dataset, subgroup, label_col, model_name)
+      #    for model_name in model_family
+      #])
       subgroup_record.update({
           family_name + '_mean': np.mean(aucs),
           family_name + '_median': np.median(aucs),
           family_name + '_std': np.std(aucs),
           family_name + '_aucs': aucs,
-          family_name + '_within_negative_label_mwus': within_negative_label_mwus,
-          family_name + '_within_positive_label_mwus': within_positive_label_mwus,
-          family_name + '_within_subgroup_mwus': within_subgroup_mwus,
-          family_name + '_cross_subgroup_negative_mwus': cross_subgroup_negative_mwus,
-          family_name + '_cross_subgroup_positive_mwus': cross_subgroup_positive_mwus,
-          family_name + '_normalized_pinned_aucs': normalized_pinned_aucs,
-          family_name + '_positive_asegs': positive_asegs,
-          family_name + '_negative_asegs': negative_asegs
+          #family_name + '_within_negative_label_mwus': within_negative_label_mwus,
+          #family_name + '_within_positive_label_mwus': within_positive_label_mwus,
+          #family_name + '_within_subgroup_mwus': within_subgroup_mwus,
+          #family_name + '_cross_subgroup_negative_mwus': cross_subgroup_negative_mwus,
+          #family_name + '_cross_subgroup_positive_mwus': cross_subgroup_positive_mwus,
+          #family_name + '_normalized_pinned_aucs': normalized_pinned_aucs,
+          #family_name + '_positive_asegs': positive_asegs,
+          #family_name + '_negative_asegs': negative_asegs
       })
     records.append(subgroup_record)
   return pd.DataFrame(records)
